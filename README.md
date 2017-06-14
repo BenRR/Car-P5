@@ -49,7 +49,8 @@ To use CNN for segmentation problem we can transform the full-connected layers i
 Because the problem we have to classify vehicle or non-vehicle so I use `sigmoid` as final output function
 
 #### 2) Training
-Before call the fit method on the model I have to flat the multi-layer 1x1 convolutional output to normal Nx1 target. And it should not be part of the final model which means when using the final model for prediction we will not call the flatten method on the model
+Before call the fit method on the model I have to flat the multi-layer 1x1 convolutional output to normal Nx1 target. And it should not be part of the final model which means when using the final model for prediction we will not call the flatten method on the model.
+
 I use `binary_crossentropy` as the loss function and `adam` as the optimizer again because the problem is a binary classification. The final hyper-params are set in `train.py` line 132-133
 
 #### 3) Training Pipeline
@@ -78,11 +79,11 @@ My model is saved as h5 file and [model link](https://benk-carnd-public.s3-us-we
 ### Classification and Segmentation
 
 #### 1) Result from DNN classifier
-This is some sample output from my neural network model when pass in a region of interest of the frame from the video,
+This is some sample raw output from my neural network model when pass in a region of interest of the frame from the video,
 
 ![model-result][image2]
 
-then I scale the output back to original size and draw some bounding with the raw output.
+then I scale the output back to original size and draw some bounding with the raw output. The code is at segmentation.py line 30
 
 ![model-result][image3]
 
