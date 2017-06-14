@@ -128,7 +128,7 @@ Here's my result
 
 [youtube link](https://youtu.be/_jriDJ8PmjU)
 
-###Discussion
+### Discussion
 
 * I struggled a bit to train the model and one of the issues was that training set wasn't shuffled enough. My validation cost didn't decrease stably.
 * I still have some false negative in the final output, if more time permitted I will add more negative training set and fine-tune the thresholds to eliminate more false negative.
