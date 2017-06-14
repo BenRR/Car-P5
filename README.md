@@ -1,4 +1,4 @@
-** Vehicle Detection Project **
+### Vehicle Detection Project ###
 
 ## **Here I take a deep learning approach which is different with the HOG + SVM in the lecture** ##
 
