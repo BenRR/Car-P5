@@ -1,6 +1,6 @@
 ** Vehicle Detection Project **
 
-*** Here I take a deep learning approach which is different with the HOG + SVM in the lecture ***
+## **Here I take a deep learning approach which is different with the HOG + SVM in the lecture** ##
 
 [//]: # (Image References)
 [image1]: output_images/cnn_output.png
@@ -18,10 +18,14 @@
 
 ### Deep Learning Model
 
+My best model is available from [model link](https://benk-carnd-public.s3-us-west-2.amazonaws.com/car_model.h5)
+
 #### 1) Full-convolutional neural network
 I choose LeNet as my base model since the MNIST photo size (32*32) is very close to our training set size(64*64). Then I change the last couple of full-connected layers in LeNet to convolutional layers.
 
-Traditionally convolutional neural networks end with one or more fully connected layers which will remove the spatial information. To use CNN for segmentation problem we can transform the full-connected layers in CNN to multi 1*1 convolutional layer. By this design for a 64*64 photo the output of the model should be just 1 float number as the possibility of a car between (0~1). For any other size photo in theory it is similar to grid search 64*64 pixels on the full photo and the output size is size of the input photo divide the last feature map size(in my model it is the output after the second maxpooling layers) in the model.
+Traditionally convolutional neural networks end with one or more fully connected layers which will remove the spatial information.
+
+To use CNN for segmentation problem we can transform the full-connected layers in CNN to multi 1*1 convolutional layer. By this design for a 64*64 photo the output of the model should be just 1 float number as the possibility of a car between (0~1). For any other size photo in theory it is similar to grid search 64*64 pixels on the full photo and the output size is size of the input photo divide the last feature map size(in my model it is the output after the second maxpooling layers) in the model.
 
  My model architect is (train.py line 81):
 
@@ -60,9 +64,16 @@ I had to save frames from the video and crop cars and negative samples from the 
 
 #### 5) Model Result
 This is some sample result from my CNN classifier
+
 ![model-result][image1]
+
 * my model output for first photo: `0.0000023`
 * my model output for second photo `0.9999995`
+
+#### 6) h5 model
+
+My model is saved as h5 file and [model link](https://benk-carnd-public.s3-us-west-2.amazonaws.com/car_model.h5)
+
 
 ### Classification and Segmentation
 
@@ -94,7 +105,10 @@ Then I use `scipy.ndimage.measurements` to label my filtered heatmap and draw bo
 ![model-result][image8]
 
 ### Video Process Pipeline
-Put everything together is the video process pipeline which code is in proccessvideo.py. To run the process pipeline `python proccessvideo.py input_video output_video`. Some sample frames transformation:
+Put everything together is the video process pipeline which code is in proccessvideo.py. You need to download my model first from [model link](https://benk-carnd-public.s3-us-west-2.amazonaws.com/car_model.h5)
+ then run the process pipeline `python proccessvideo.py input_video output_video`.
+
+ Some sample frames transformation:
 
 ![model-result][image9]
 
@@ -103,13 +117,19 @@ Put everything together is the video process pipeline which code is in proccessv
 ![model-result][image11]
 
 ### Output video
-There are still some false positives in my final video also my bounding boxes are not smooth. If I have more time I will fine-tune the parameters a bit more and add more negative training sets to get better results.
+There are still some false positives in my final video also my bounding boxes are not smooth.
 
+If I have more time I will fine-tune the parameters a bit more and add more negative training sets to get better results.
 
+Here's my result
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/_jriDJ8PmjU/0.jpg)](https://www.youtube.com/watch?v=_jriDJ8PmjU)
+
+[youtube link](https://youtu.be/_jriDJ8PmjU)
 
 ###Discussion
 
-* I struggled a bit train the model and one of the issues was the training set wasn't shuffled enough. My validation cost didn't decrease stably
-* I still have some false negative in the final output, if more time permitted I will add more negative training set and fine-tune the thresholds to eliminate more false negative
-* My bounding box drawing is not smooth in the video, if more time permitted I will try to add more caching, averaging and caching to make it smoother
-* Lastly thanks for the classmates in slack channels to encourage me to take a deep learning approach. As I was told and read that HOGS could be considered as some type of convolutional technic.
+* I struggled a bit to train the model and one of the issues was that training set wasn't shuffled enough. My validation cost didn't decrease stably.
+* I still have some false negative in the final output, if more time permitted I will add more negative training set and fine-tune the thresholds to eliminate more false negative.
+* My bounding box drawing is not smooth in the video, if more time permitted I will try to add more caching, averaging and caching to make it smoother.
+* Lastly thanks for the classmates in slack channels to encourage me to take a deep learning approach. As I was told and read that HOGS could be considered as a special type of convolutional neural network.
