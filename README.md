@@ -21,11 +21,11 @@
 My best model is available from [model link](https://benk-carnd-public.s3-us-west-2.amazonaws.com/car_model.h5)
 
 #### 1) Full-convolutional neural network
-I choose LeNet as my base model since the MNIST photo size (32*32) is very close to our training set size(64*64). Then I change the last couple of full-connected layers in LeNet to convolutional layers.
+I choose LeNet as my base model since the MNIST photo size (32x32) is very close to our training set size(64x64). Then I change the last couple of full-connected layers in LeNet to convolutional layers.
 
 Traditionally convolutional neural networks end with one or more fully connected layers which will remove the spatial information.
 
-To use CNN for segmentation problem we can transform the full-connected layers in CNN to multi 1*1 convolutional layer. By this design for a 64*64 photo the output of the model should be just 1 float number as the possibility of a car between (0~1). For any other size photo in theory it is similar to grid search 64*64 pixels on the full photo and the output size is size of the input photo divide the last feature map size(in my model it is the output after the second maxpooling layers) in the model.
+To use CNN for segmentation problem we can transform the full-connected layers in CNN to multi 1x1 convolutional layer. By this design for a 64x64 photo the output of the model should be just 1 float number as the possibility of a car between (0~1). For any other size photo in theory it is similar to grid search 64x64 pixels on the full photo and the output size is size of the input photo divide the last feature map size(in my model it is the output after the second maxpooling layers) in the model.
 
  My model architect is (train.py line 81):
 
@@ -49,7 +49,7 @@ To use CNN for segmentation problem we can transform the full-connected layers i
 Because the problem we have to classify vehicle or non-vehicle so I use `sigmoid` as final output function
 
 #### 2) Training
-Before call the fit method on the model I have to flat the multi-layer 1*1 convolutional output to normal N*1 target. And it should not be part of the final model which means when using the final model for prediction we will not call the flatten method on the model
+Before call the fit method on the model I have to flat the multi-layer 1x1 convolutional output to normal Nx1 target. And it should not be part of the final model which means when using the final model for prediction we will not call the flatten method on the model
 I use `binary_crossentropy` as the loss function and `adam` as the optimizer again because the problem is a binary classification. The final hyper-params are set in `train.py` line 132-133
 
 #### 3) Training Pipeline
